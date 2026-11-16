@@ -1,4 +1,3 @@
-
 """Environment-based configuration for local and container execution."""
 
 import os
@@ -31,35 +30,21 @@ class Settings:
         api_key = os.getenv("GROQ_API_KEY", "").strip()
 
         if not api_key:
-            raise ConfigurationError(
-                "GROQ_API_KEY is missing. Add your Groq API key to .env."
-            )
+            raise ConfigurationError("GROQ_API_KEY is missing. Add your Groq API key to .env.")
 
         try:
             settings = cls(
                 groq_api_key=api_key,
-                embedding_model=os.getenv(
-                    "EMBEDDING_MODEL", "BAAI/bge-small-en-v1.5"
-                ),
-                generation_model=os.getenv(
-                    "GROQ_MODEL", "openai/gpt-oss-120b"
-                ),
-                embedding_dimension=int(
-                    os.getenv("EMBEDDING_DIMENSION", "384")
-                ),
-                qdrant_url=os.getenv(
-                    "QDRANT_URL", "http://localhost:6333"
-                ),
+                embedding_model=os.getenv("EMBEDDING_MODEL", "BAAI/bge-small-en-v1.5"),
+                generation_model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
+                embedding_dimension=int(os.getenv("EMBEDDING_DIMENSION", "384")),
+                qdrant_url=os.getenv("QDRANT_URL", "http://localhost:6333"),
                 qdrant_api_key=os.getenv("QDRANT_API_KEY", ""),
-                qdrant_collection=os.getenv(
-                    "QDRANT_COLLECTION", "basic_rag_knowledge"
-                ),
+                qdrant_collection=os.getenv("QDRANT_COLLECTION", "basic_rag_knowledge"),
                 chunk_size=int(os.getenv("CHUNK_SIZE", "800")),
                 chunk_overlap=int(os.getenv("CHUNK_OVERLAP", "120")),
                 top_k=int(os.getenv("TOP_K", "4")),
-                min_relevance_score=float(
-                    os.getenv("MIN_RELEVANCE_SCORE", "0.25")
-                ),
+                min_relevance_score=float(os.getenv("MIN_RELEVANCE_SCORE", "0.25")),
             )
         except ValueError as exc:
             raise ConfigurationError(
@@ -67,27 +52,19 @@ class Settings:
             ) from exc
 
         if settings.embedding_dimension <= 0:
-            raise ConfigurationError(
-                "Embedding dimension must be positive."
-            )
+            raise ConfigurationError("Embedding dimension must be positive.")
 
         if settings.chunk_size <= 0 or settings.chunk_overlap < 0:
-            raise ConfigurationError(
-                "Chunk size must be positive and overlap cannot be negative."
-            )
+            raise ConfigurationError("Chunk size must be positive and overlap cannot be negative.")
 
         if settings.chunk_overlap >= settings.chunk_size:
-            raise ConfigurationError(
-                "CHUNK_OVERLAP must be smaller than CHUNK_SIZE."
-            )
+            raise ConfigurationError("CHUNK_OVERLAP must be smaller than CHUNK_SIZE.")
 
         if settings.top_k <= 0:
             raise ConfigurationError("TOP_K must be positive.")
 
         if not 0.0 <= settings.min_relevance_score <= 1.0:
-            raise ConfigurationError(
-                "MIN_RELEVANCE_SCORE must be between 0 and 1."
-            )
+            raise ConfigurationError("MIN_RELEVANCE_SCORE must be between 0 and 1.")
 
         if not settings.qdrant_collection.strip():
             raise ConfigurationError("QDRANT_COLLECTION cannot be empty.")

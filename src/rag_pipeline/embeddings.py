@@ -1,4 +1,3 @@
-
 """Local text embedding adapter using Qdrant FastEmbed."""
 
 from typing import Any
@@ -23,9 +22,7 @@ class FastEmbedProvider:
             self.model = model
 
         except Exception as exc:
-            raise EmbeddingError(
-                f"Could not initialize FastEmbed: {exc}"
-            ) from exc
+            raise EmbeddingError(f"Could not initialize FastEmbed: {exc}") from exc
 
     def embed_documents(self, texts: list[str]) -> list[list[float]]:
         """Generate embeddings for document passages."""
@@ -38,9 +35,7 @@ class FastEmbedProvider:
             return [vector.tolist() for vector in vectors]
 
         except Exception as exc:
-            raise EmbeddingError(
-                f"Document embedding failed: {exc}"
-            ) from exc
+            raise EmbeddingError(f"Document embedding failed: {exc}") from exc
 
     def embed_query(self, text: str) -> list[float]:
         """Generate an embedding for a user query."""
@@ -48,20 +43,14 @@ class FastEmbedProvider:
             raise ValueError("Query cannot be empty.")
 
         try:
-            vectors = list(
-                self.model.query_embed(f"query: {text}")
-            )
+            vectors = list(self.model.query_embed(f"query: {text}"))
 
             if not vectors:
-                raise EmbeddingError(
-                    "FastEmbed returned no query embedding."
-                )
+                raise EmbeddingError("FastEmbed returned no query embedding.")
 
             return vectors[0].tolist()
 
         except EmbeddingError:
             raise
         except Exception as exc:
-            raise EmbeddingError(
-                f"Query embedding failed: {exc}"
-            ) from exc
+            raise EmbeddingError(f"Query embedding failed: {exc}") from exc

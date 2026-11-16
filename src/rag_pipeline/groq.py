@@ -1,4 +1,3 @@
-
 """Groq chat-completion adapter for RAG answer generation."""
 
 from typing import Any
@@ -22,9 +21,7 @@ class GroqProvider:
                 client = Groq(api_key=api_key)
 
             except Exception as exc:
-                raise GenerationError(
-                    f"Could not initialize Groq client: {exc}"
-                ) from exc
+                raise GenerationError(f"Could not initialize Groq client: {exc}") from exc
 
         self.client = client
         self.model = model
@@ -54,23 +51,17 @@ class GroqProvider:
                 max_completion_tokens=1024,
             )
 
-            answer = (
-                response.choices[0].message.content or ""
-            ).strip()
+            answer = (response.choices[0].message.content or "").strip()
 
             if not answer:
-                raise GenerationError(
-                    "Groq returned an empty response."
-                )
+                raise GenerationError("Groq returned an empty response.")
 
             return answer
 
         except GenerationError:
             raise
         except Exception as exc:
-            raise GenerationError(
-                f"Groq answer generation failed: {exc}"
-            ) from exc
+            raise GenerationError(f"Groq answer generation failed: {exc}") from exc
 
     def close(self) -> None:
         """Close the Groq client's HTTP connection."""

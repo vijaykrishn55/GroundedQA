@@ -1,4 +1,3 @@
-
 """Command-line entry point for the assessment pipeline."""
 
 import argparse
@@ -111,9 +110,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         settings = Settings.from_env()
 
-        pipeline, embedder, generator, store = (
-            _build_pipeline(settings)
-        )
+        pipeline, embedder, generator, store = _build_pipeline(settings)
 
         if args.command == "ingest":
             documents = load_documents(args.file)

@@ -3,8 +3,9 @@
 from rag_pipeline.schemas import RetrievedChunk
 
 INSUFFICIENT_CONTEXT_ANSWER = (
-        "I couldn't find enough information in the knowledge base to answer that."
+    "I couldn't find enough information in the knowledge base to answer that."
 )
+
 
 class PromptBuilder:
     """Build a context-grounded prompt and label each retrieved source."""
