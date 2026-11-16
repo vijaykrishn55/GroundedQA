@@ -1,0 +1,38 @@
+[
+  {
+    "id": "doc_001",
+    "title": "Database Error Codes",
+    "source": "infrastructure-handbook",
+    "content": "Error code ERR-9021-X occurs when the connection pool exhausts all available socket descriptors during high concurrency spikes. To fix ERR-9021-X, set MAX_CONN_POOL=500 in dynamic environment variables and restart the cluster deployment node. Validate the change by checking that the connection pool has free socket descriptors after the restart."
+  },
+  {
+    "id": "doc_002",
+    "title": "General System Latency Troubleshooting",
+    "source": "operations-guide",
+    "content": "When application latency increases under heavy database connection usage, review the connection pool settings and database utilization. General database dynamic settings should be reviewed by the infrastructure team periodically. Monitor request latency, active connections, and connection wait time before changing production configuration."
+  },
+  {
+    "id": "doc_003",
+    "title": "Authentication Middleware Architecture",
+    "source": "platform-architecture",
+    "content": "The authentication proxy verifies OAuth2 bearer tokens. If a token expires, the system returns HTTP status code 401 with internal failure identifier ERR-4010-A. Ensure JWT signature keys are synchronized across authentication services. Clients should obtain a fresh access token before retrying an authenticated request."
+  },
+  {
+    "id": "doc_004",
+    "title": "Cluster Deployment Maintenance",
+    "source": "deployment-runbook",
+    "content": "To restart cluster deployment nodes cleanly, execute the command kubectl rollout restart deployment/core-node. This performs a controlled rollout and helps maintain state synchronization during infrastructure updates. Check rollout status after issuing the command and investigate any pod that fails to become ready."
+  },
+  {
+    "id": "doc_005",
+    "title": "Qdrant Vector Database Notes",
+    "source": "retrieval-architecture",
+    "content": "Qdrant stores vectors together with optional JSON payloads. A collection defines the vector configuration, including vector size and distance metric. For cosine semantic retrieval, create a collection with the cosine distance metric, upsert points containing vectors and source payloads, and query the collection with an embedding generated from the user's question."
+  },
+  {
+    "id": "doc_006",
+    "title": "Retrieval-Augmented Generation Overview",
+    "source": "ai-engineering-notes",
+    "content": "Retrieval-Augmented Generation combines information retrieval with language-model generation. A typical pipeline loads source documents, splits them into chunks, creates embeddings, stores the vectors, embeds a user query, retrieves the most relevant chunks, builds a context-aware prompt, and asks a language model to produce an answer. The system should abstain when the retrieved context does not contain enough information."
+  }
+]

@@ -7,8 +7,8 @@ from pathlib import Path
 
 from rag_pipeline.chunker import TextChunker
 from rag_pipeline.config import Settings
-from rag_pipeline.errors import RAGError
 from rag_pipeline.embeddings import FastEmbedProvider
+from rag_pipeline.errors import RAGError
 from rag_pipeline.groq import GroqProvider
 from rag_pipeline.loader import load_documents
 from rag_pipeline.pipeline import RAGPipeline

@@ -7,7 +7,6 @@ from typing import Any
 from rag_pipeline.errors import DocumentLoadError
 from rag_pipeline.schemas import Document
 
-
 _REQUIRED_FIELDS = ("id", "title", "content")
 
 
